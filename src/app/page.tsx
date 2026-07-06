@@ -2,11 +2,9 @@ import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import StatsBar from "@/components/sections/StatsBar";
 import About from "@/components/sections/About";
-import Products from "@/components/sections/Products";
+import Offerings from "@/components/sections/Offerings";
 import WhyUs from "@/components/sections/WhyUs";
-import Services from "@/components/sections/Services";
 import SpecialOffers from "@/components/sections/SpecialOffers";
-import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
 import Location from "@/components/sections/Location";
 import FAQ from "@/components/sections/FAQ";
@@ -22,11 +20,9 @@ export default function Home() {
         <Hero />
         <StatsBar />
         <About />
-        <Products />
+        <Offerings />
         <WhyUs />
-        <Services />
         <SpecialOffers />
-        <Gallery />
         <Testimonials />
         <Location />
         <FAQ />

@@ -26,6 +26,23 @@ const testimonials = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
 export default function Testimonials() {
   return (
     <section className="py-20 lg:py-28 bg-primary-50">
@@ -49,14 +66,18 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {testimonials.map((t, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        >
+          {testimonials.map((t) => (
             <motion.div
               key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              variants={cardVariants}
+              whileHover={{ y: -4, scale: 1.01 }}
               className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 relative"
             >
               <Quote className="w-8 h-8 text-primary/15 absolute top-4 right-4" />
@@ -76,7 +97,7 @@ export default function Testimonials() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

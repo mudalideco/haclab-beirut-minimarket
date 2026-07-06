@@ -1,18 +1,36 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, MapPin, Phone, Mail, ArrowUp } from "lucide-react";
 
 export default function Footer() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="bg-foreground text-white">
+    <footer className="bg-foreground text-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
-          <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="space-y-4"
+          >
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <ShoppingBag className="w-5 h-5 text-white" />
@@ -31,10 +49,15 @@ export default function Footer() {
               Road, Makindye. Serving the community with quality products and
               friendly service.
             </p>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <h3 className="font-bold font-heading text-white mb-4">
               Quick Links
             </h3>
@@ -42,7 +65,7 @@ export default function Footer() {
               {[
                 { label: "Home", href: "#hero" },
                 { label: "About", href: "#about" },
-                { label: "Products", href: "#products" },
+                { label: "Offerings", href: "#offerings" },
                 { label: "Why Us", href: "#why-us" },
                 { label: "Location", href: "#location" },
                 { label: "Contact", href: "#contact" },
@@ -57,10 +80,15 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <h3 className="font-bold font-heading text-white mb-4">
               Contact Us
             </h3>
@@ -99,10 +127,15 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Hours */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             <h3 className="font-bold font-heading text-white mb-4">Hours</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex justify-between">
@@ -122,11 +155,17 @@ export default function Footer() {
                 <span className="text-white">8 AM – 6 PM</span>
               </li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="border-t border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
+        >
           <p className="text-gray-500 text-xs">
             &copy; {new Date().getFullYear()} Beirut MiniMarket. All rights
             reserved.
@@ -142,17 +181,27 @@ export default function Footer() {
               Haclab Co Ltd
             </a>
           </p>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Scroll to top */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-6 z-40 w-12 h-12 bg-primary hover:bg-primary-dark text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105"
-        aria-label="Scroll to top"
-      >
-        <ArrowUp className="w-5 h-5" />
-      </button>
+      {/* Animated scroll to top button */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            onClick={scrollToTop}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-40 w-12 h-12 bg-primary hover:bg-primary-dark text-white rounded-full shadow-lg flex items-center justify-center transition-colors"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }

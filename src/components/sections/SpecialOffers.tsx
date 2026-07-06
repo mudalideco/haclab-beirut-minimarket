@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Tag, Sparkles, ShoppingCart, Phone } from "lucide-react";
+import { Tag, Sparkles, Phone } from "lucide-react";
 
 const offers = [
   {
@@ -24,6 +24,24 @@ const offers = [
     color: "from-primary to-green-600",
   },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
 
 export default function SpecialOffers() {
   return (
@@ -49,14 +67,18 @@ export default function SpecialOffers() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {offers.map((offer, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {offers.map((offer) => (
             <motion.div
               key={offer.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.12 }}
+              variants={cardVariants}
+              whileHover={{ y: -6, scale: 1.02 }}
               className="relative rounded-2xl overflow-hidden group cursor-default"
             >
               <div
@@ -84,7 +106,7 @@ export default function SpecialOffers() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

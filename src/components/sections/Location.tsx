@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Clock, Navigation, Phone } from "lucide-react";
+import { MapPin, Clock, Phone } from "lucide-react";
 
 const hours = [
   { day: "Monday – Friday", hours: "7:00 AM – 9:00 PM" },
@@ -38,7 +38,7 @@ export default function Location() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 to-primary-50 border border-gray-100 h-full min-h-[320px] flex items-center justify-center">
               <div className="text-center p-8">
@@ -49,15 +49,17 @@ export default function Location() {
                 <p className="text-muted-foreground mb-4">
                   Makindye, Kampala, Uganda
                 </p>
-                <a
+                <motion.a
                   href="https://maps.google.com/?q=Beirut+MiniMarket+Makindye+Kampala"
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
                   className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
                 >
-                  <Navigation className="w-4 h-4" />
+                  <MapPin className="w-4 h-4" />
                   Open in Google Maps
-                </a>
+                </motion.a>
               </div>
             </div>
           </motion.div>
@@ -67,10 +69,16 @@ export default function Location() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="space-y-6"
           >
-            <div className="bg-primary-50 rounded-2xl p-6 border border-primary/10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-primary-50 rounded-2xl p-6 border border-primary/10"
+            >
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-bold font-heading text-foreground">
@@ -79,20 +87,30 @@ export default function Location() {
               </div>
               <div className="space-y-3">
                 {hours.map((h) => (
-                  <div
+                  <motion.div
                     key={h.day}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3 }}
                     className="flex items-center justify-between py-2 border-b border-primary/10 last:border-0"
                   >
                     <span className="font-medium text-foreground">
                       {h.day}
                     </span>
                     <span className="text-muted-foreground">{h.hours}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-primary text-white rounded-2xl p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-primary text-white rounded-2xl p-6"
+            >
               <div className="flex items-center gap-3 mb-3">
                 <Phone className="w-6 h-6" />
                 <h3 className="text-xl font-bold font-heading">
@@ -102,14 +120,16 @@ export default function Location() {
               <p className="text-white/80 mb-3">
                 Have a question or want to check stock? Give us a call!
               </p>
-              <a
+              <motion.a
                 href="tel:+256782511111"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 bg-white text-primary px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary-50 transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 +256 782 511 111
-              </a>
-            </div>
+              </motion.a>
+            </motion.div>
           </motion.div>
         </div>
       </div>

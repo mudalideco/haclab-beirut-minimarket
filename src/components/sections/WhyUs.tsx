@@ -49,6 +49,23 @@ const reasons = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
 export default function WhyUs() {
   return (
     <section id="why-us" className="py-20 lg:py-28 bg-white">
@@ -75,14 +92,21 @@ export default function WhyUs() {
         </motion.div>
 
         {/* Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {reasons.map((reason, i) => (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          {reasons.map((reason) => (
             <motion.div
               key={reason.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
+              variants={cardVariants}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 12px 28px rgba(22, 163, 74, 0.1)",
+              }}
               className="group p-6 rounded-2xl border border-gray-100 hover:border-primary/20 hover:bg-primary-50/50 transition-all"
             >
               <div className="w-12 h-12 rounded-xl bg-primary-50 text-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -96,7 +120,7 @@ export default function WhyUs() {
               </p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
