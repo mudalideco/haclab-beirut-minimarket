@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import CountUp from "react-countup";
+import CountUp from "@/components/ui/CountUp";
 import { ShoppingBag, Smile, Clock, Star } from "lucide-react";
 
 const stats = [
@@ -78,7 +78,7 @@ export default function StatsBar() {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          {stats.map((stat, i) => (
+          {stats.map((stat) => (
             <motion.div
               key={stat.label}
               variants={statItemVariants}
@@ -91,20 +91,14 @@ export default function StatsBar() {
                 <stat.icon className="w-8 h-8 mx-auto mb-3 text-white/80" />
               </motion.div>
               <div className="text-3xl lg:text-4xl font-bold font-heading mb-1">
-                {isInView ? (
-                  <CountUp
-                    start={0}
-                    end={stat.value}
-                    decimal="."
-                    decimals={stat.decimals ?? 0}
-                    duration={2.5 + i * 0.3}
-                    separator=","
-                    suffix={stat.suffix ?? ""}
-                    prefix={stat.prefix ?? ""}
-                  />
-                ) : (
-                  stat.displayText ?? "0"
-                )}
+                <CountUp
+                  end={stat.value}
+                  decimals={stat.decimals ?? 0}
+                  separator=","
+                  suffix={stat.suffix ?? ""}
+                  prefix={stat.prefix ?? ""}
+                  displayText={stat.displayText}
+                />
               </div>
               <div className="text-sm text-white/70">{stat.label}</div>
             </motion.div>

@@ -1,15 +1,22 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import CountUp from "react-countup";
+import React from "react";
+import { motion } from "framer-motion";
+import CountUp from "@/components/ui/CountUp";
 import { Store, Heart, Users, ShoppingBag } from "lucide-react";
 
-const stats = [
+const stats: {
+  icon: React.ComponentType<{ className?: string }>;
+  value: number;
+  suffix: string;
+  label: string;
+  decimals: number;
+  display?: string;
+}[] = [
   { icon: Store, value: 3, suffix: "+", label: "Years Serving", decimals: 0 },
   { icon: Heart, value: 1000, suffix: "+", label: "Happy Customers", decimals: 0 },
   { icon: ShoppingBag, value: 500, suffix: "+", label: "Products Available", decimals: 0 },
-  { icon: Users, value: 7, suffix: "", label: "Days a Week", decimals: 0, prefix: "", display: "7 Days" },
+  { icon: Users, value: 7, suffix: "", label: "Days a Week", decimals: 0, display: "7 Days" },
 ];
 
 const containerVariants = {
@@ -31,9 +38,6 @@ const statVariants = {
 };
 
 export default function About() {
-  const statsRef = useRef<HTMLDivElement>(null);
-  const statsInView = useInView(statsRef, { once: true, margin: "-50px" });
-
   return (
     <section id="about" className="py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,7 +118,6 @@ export default function About() {
 
             {/* Animated stats with CountUp */}
             <motion.div
-              ref={statsRef}
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -130,18 +133,13 @@ export default function About() {
                 >
                   <stat.icon className="w-5 h-5 text-primary mx-auto mb-1" />
                   <div className="text-xl font-bold font-heading text-foreground">
-                    {statsInView ? (
-                      <CountUp
-                        start={0}
-                        end={stat.value}
-                        duration={2.2}
-                        separator=","
-                        suffix={stat.suffix}
-                        decimals={stat.decimals}
-                      />
-                    ) : (
-                      "0"
-                    )}
+                    <CountUp
+                      end={stat.value}
+                      separator=","
+                      suffix={stat.suffix}
+                      decimals={stat.decimals}
+                      displayText={stat.display}
+                    />
                   </div>
                   <div className="text-xs text-muted-foreground">
                     {stat.label}
